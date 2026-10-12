@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | AgriSmart AI{% endblock %}
+{% block content %}
+<section class="hero p-4 p-md-5 mb-4"><span class="eyebrow">INTELLIGENT FARMING PLATFORM</span>
+<h1 class="display-5 fw-bold mt-2">Grow smarter with data.</h1>
+<p class="lead">AI-assisted crop selection, irrigation planning and soil nutrient insights.</p>
+<a href="{{ url_for('crop') }}" class="btn btn-success btn-lg">Get crop recommendation →</a></section>
+<div class="row g-3 mb-4">
+<div class="col-12 col-md-4"><div class="stat-card"><p>Total predictions</p><h2>{{ total }}</h2><span>Saved in SQLite</span></div></div>
+<div class="col-12 col-md-4"><div class="stat-card"><p>Crop predictions</p><h2>{{ crops }}</h2><span>Random Forest model</span></div></div>
+<div class="col-12 col-md-4"><div class="stat-card"><p>Irrigation assessments</p><h2>{{ irrigation }}</h2><span>Rule-based estimator</span></div></div></div>
+<h2 class="section-title">Explore the platform</h2><div class="row g-3 mb-5">
+{% for name, desc, endpoint, icon in [('Crop recommendation','Predict a candidate crop from seven soil and climate features.','crop','🌾'),('Smart irrigation','Estimate a demonstration water requirement.','irrigation','💧'),('Fertilizer advisory','Review NPK flags and soil pH guidance.','fertilizer','🧪'),('Farm analytics','Inspect model evaluation and prediction history.','analytics','📊')] %}
+<div class="col-12 col-sm-6 col-lg-3"><a class="feature-card" href="{{ url_for(endpoint) }}"><span class="feature-icon">{{ icon }}</span><h3>{{ name }}</h3><p>{{ desc }}</p><span class="text-success">Open module ↗</span></a></div>{% endfor %}</div>
+<div class="row g-4"><div class="col-lg-5"><div class="panel h-100"><h2 class="h5">Model status</h2>
+{% if metrics %}<div class="metric">{{ (metrics.accuracy * 100)|round(1) }}%</div><p class="text-secondary">Held-out test accuracy on the current dataset.</p>
+<p class="small mb-1">Training rows: {{ metrics.train_rows }}</p><p class="small mb-1">Test rows: {{ metrics.test_rows }}</p><p class="small">Crop classes: {{ metrics.crop_classes }}</p>
+{% else %}<p>Model metrics will appear after training.</p>{% endif %}<a href="{{ url_for('analytics') }}">View analytics →</a></div></div>
+<div class="col-lg-7"><div class="panel"><h2 class="h5 mb-3">Recent activity</h2>{% if recent %}
+{% for item in recent %}<div class="history-row"><div><strong>{{ item.module|title }}</strong><br><span class="small text-secondary">{{ item.created_at[:19] }}</span></div><span class="badge text-bg-light">{{ item.result }}</span></div>{% endfor %}
+{% else %}<p class="text-secondary">Your predictions will appear here.</p>{% endif %}</div></div></div>
+{% endblock %}

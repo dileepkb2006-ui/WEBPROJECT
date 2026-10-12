@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}Irrigation AI | AgriSmart{% endblock %}
+{% block content %}<h1 class="page-heading">💧 Smart irrigation planner</h1><p class="text-secondary">A rule-based demonstration estimator using soil moisture and weather inputs.</p>
+<div class="row g-4"><div class="col-lg-7"><div class="panel"><form method="post" class="row g-3">
+{% for key, label, unit, default in [('moisture','Soil moisture','%',35),('temperature','Temperature','°C',30),('humidity','Relative humidity','%',55),('rainfall','Recent rainfall','mm',2),('area_acres','Farm area','acres',1)] %}
+<div class="col-md-6"><label class="form-label" for="{{ key }}">{{ label }}</label><div class="input-group"><input class="form-control" id="{{ key }}" name="{{ key }}" type="number" step="any" required value="{{ values.get(key, default) }}"><span class="input-group-text">{{ unit }}</span></div></div>{% endfor %}
+<div class="col-12"><label class="form-label" for="crop_stage">Crop growth stage</label><select class="form-select" name="crop_stage" id="crop_stage">{% for stage in ['seedling','vegetative','flowering','maturity'] %}
+<option value="{{ stage }}" {% if request.form.get('crop_stage','vegetative') == stage %}selected{% endif %}>{{ stage|title }}</option>{% endfor %}</select></div>
+<div class="col-12"><button class="btn btn-success btn-lg w-100">Estimate irrigation</button></div></form></div></div>
+<div class="col-lg-5"><div class="panel"><h2 class="h5">Water assessment</h2>{% if result %}
+<h3 class="metric">{{ result.depth_mm }} <small>mm</small></h3><p>{{ result.status }}</p><p>Illustrative volume: <strong>{{ "{:,.0f}".format(result.water_litres) }} litres</strong></p><p>{{ result.advice }}</p><p class="small text-secondary">{{ result.method }}. Do not use as an automatic irrigation control.</p>
+{% else %}<p class="text-secondary">Submit your inputs to see the estimated water depth and volume.</p>{% endif %}</div></div></div>{% endblock %}

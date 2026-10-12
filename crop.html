@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Crop AI | AgriSmart{% endblock %}
+{% block content %}<h1 class="page-heading">🌾 Crop recommendation</h1><p class="text-secondary">Enter soil nutrient and climate readings to predict a crop class.</p>
+<div class="row g-4"><div class="col-lg-7"><div class="panel"><form method="post" class="row g-3">
+{% for key, label, unit, default in [('N','Nitrogen (N)','mg/kg',90),('P','Phosphorus (P)','mg/kg',42),('K','Potassium (K)','mg/kg',43),('temperature','Temperature','°C',25),('humidity','Relative humidity','%',70),('ph','Soil pH','pH',6.5),('rainfall','Rainfall','mm',120)] %}
+<div class="col-12 col-md-6"><label class="form-label" for="{{ key }}">{{ label }}</label><div class="input-group">
+<input class="form-control" id="{{ key }}" name="{{ key }}" type="number" step="any" required value="{{ values.get(key, default) }}"><span class="input-group-text">{{ unit }}</span></div></div>{% endfor %}
+<div class="col-12"><button class="btn btn-success btn-lg w-100">Predict suitable crop</button></div></form></div></div>
+<div class="col-lg-5"><div class="panel result-panel"><h2 class="h5">Prediction result</h2>{% if result %}
+<span class="eyebrow">MODEL OUTPUT</span><div class="metric text-capitalize">{{ result.crop }}</div>
+{% if result.confidence is not none %}<p>Model confidence: <strong>{{ result.confidence }}%</strong></p>{% endif %}
+<p>{{ result.note }}</p><p class="small text-secondary">{{ result.disclaimer }}</p>
+{% else %}<p class="text-secondary">Your predicted crop will appear here after submission.</p>{% endif %}</div></div></div>{% endblock %}

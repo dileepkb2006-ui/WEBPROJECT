@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}Fertilizer Advisor | AgriSmart{% endblock %}
+{% block content %}<h1 class="page-heading">🧪 Soil nutrient advisory</h1><p class="text-secondary">Review indicative NPK flags and pH observations.</p>
+<div class="row g-4"><div class="col-lg-6"><div class="panel"><form method="post" class="row g-3">
+{% for key, label, default in [('N','Nitrogen (N)',35),('P','Phosphorus (P)',20),('K','Potassium (K)',25),('ph','Soil pH',5.2)] %}
+<div class="col-md-6"><label class="form-label" for="{{ key }}">{{ label }}</label><input class="form-control" id="{{ key }}" name="{{ key }}" type="number" step="any" required value="{{ values.get(key, default) }}"></div>{% endfor %}
+<div class="col-12"><label class="form-label" for="crop">Crop being grown</label><input class="form-control" id="crop" name="crop" maxlength="60" required value="{{ request.form.get('crop','Tomato') }}"></div>
+<div class="col-12"><button class="btn btn-success btn-lg w-100">Analyze nutrient levels</button></div></form></div></div>
+<div class="col-lg-6"><div class="panel"><h2 class="h5">Advisory report</h2>{% if result %}
+<p>Crop: <strong>{{ result.crop }}</strong></p><h3 class="h6">Nutrient observations</h3><ul>{% for item in result.nutrient_flags %}<li>{{ item }}</li>{% endfor %}</ul>
+<h3 class="h6">Soil pH</h3><p>{{ result.ph_advice }}</p><p>{{ result.recommendation }}</p><p class="small text-secondary">{{ result.method }}</p>
+{% else %}<p class="text-secondary">Your nutrient assessment will appear here.</p>{% endif %}</div></div></div>{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block title %}Analytics | AgriSmart{% endblock %}
+{% block content %}<h1 class="page-heading">📊 Model and farm analytics</h1>
+<div class="row g-3 mb-4"><div class="col-6 col-lg-3"><div class="stat-card"><p>Dataset rows</p><h2>{{ dataset.get('rows',0) }}</h2></div></div><div class="col-6 col-lg-3"><div class="stat-card"><p>Features / columns</p><h2>{{ dataset.get('columns',0) }}</h2></div></div><div class="col-6 col-lg-3"><div class="stat-card"><p>Crop classes</p><h2>{{ dataset.get('crops',0) }}</h2></div></div><div class="col-6 col-lg-3"><div class="stat-card"><p>Test accuracy</p><h2>{{ (metrics.get('accuracy',0)*100)|round(1) }}%</h2></div></div></div>
+<div class="row g-4 mb-4"><div class="col-lg-7"><div class="panel"><h2 class="h5">Crop class distribution</h2><canvas id="cropChart" height="220"></canvas><script id="distribution-data" type="application/json">{{ dataset.get('distribution', {})|tojson }}</script></div></div>
+<div class="col-lg-5"><div class="panel"><h2 class="h5">Upload training CSV</h2><p class="small text-secondary">Requires columns N, P, K, temperature, humidity, ph, rainfall, label. Uploading replaces the current dataset and retrains the model.</p>
+<form method="post" action="{{ url_for('upload_dataset') }}" enctype="multipart/form-data"><input class="form-control mb-3" type="file" name="dataset" accept=".csv" required><button class="btn btn-success">Validate, import and train</button></form><hr>
+{% if metrics %}<p>Training rows: {{ metrics.train_rows }}</p><p>Test rows: {{ metrics.test_rows }}</p><p>Classes: {{ metrics.crop_classes }}</p>{% endif %}</div></div></div>
+<div class="panel"><h2 class="h5 mb-3">Prediction history</h2><div class="table-responsive"><table class="table align-middle"><thead><tr><th>ID</th><th>Time (UTC)</th><th>Module</th><th>Result (JSON)</th></tr></thead><tbody>
+{% for row in history %}<tr><td>{{ row.id }}</td><td>{{ row.created_at[:19] }}</td><td>{{ row.module|title }}</td><td class="small text-break">{{ row.result }}</td></tr>{% else %}<tr><td colspan="4" class="text-secondary">No prediction history yet.</td></tr>{% endfor %}
+</tbody></table></div></div>{% endblock %}
+{% block scripts %}<script>
+const distributionElement = document.getElementById("distribution-data");
+if (distributionElement && document.getElementById("cropChart")) {
+ const distribution = JSON.parse(distributionElement.textContent);
+ new Chart(document.getElementById("cropChart"), {type:"bar",data:{labels:Object.keys(distribution),datasets:[{label:"Records",data:Object.values(distribution),backgroundColor:"#368451",borderRadius:5}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+}
+</script>{% endblock %}
