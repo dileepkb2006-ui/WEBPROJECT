@@ -8,6 +8,7 @@ The platform combines a trained Random Forest classifier with rule-based agricul
 
 Developed as an advanced Machine Learning Project, it demonstrates the practical application of artificial intelligence, machine learning, and data analytics in agriculture.
 
+
 📑 Table of Contents
 Project Overview
 Key Features
@@ -31,6 +32,8 @@ Limitations and Disclaimer
 Academic Project Information
 Contributing
 License
+
+
 📌 1. Project Overview
 
 Smart Agriculture AI integrates machine learning and agricultural decision-support features into a single web application.
@@ -50,7 +53,9 @@ Agriculture students and researchers
 Machine learning beginners
 Developers interested in agricultural technology
 Users exploring data-driven agricultural decision support
+
 ✨ 2. Key Features
+
 Feature	Description
 🌾 Crop Recommendation	Predicts a candidate crop using a Random Forest classifier.
 💧 Smart Irrigation	Estimates illustrative water requirements using environmental conditions and crop growth stage.
@@ -62,6 +67,8 @@ Feature	Description
 🔌 JSON API	Provides health-check, crop prediction, and history endpoints.
 📱 Responsive Interface	Supports desktop, tablet, and mobile layouts.
 🖥️ Local Execution	Runs locally without paid APIs, cloud accounts, or physical sensors.
+
+
 📁 3. Project Structure
 smart-agriculture-ai/
 │
@@ -102,6 +109,7 @@ smart-agriculture-ai/
     └── test_models.py
 
 File Descriptions
+
 File or Directory	Purpose
 app.py	Flask application, page routes, API endpoints, and database integration.
 train_model.py	Dataset validation, model training, evaluation, and artifact generation.
@@ -121,6 +129,7 @@ LICENSE	Project licensing terms.
 Note: Generated files such as the trained model, metrics, and SQLite database may not exist until the project has been initialized. Create the test files if they are not already included in the repository.
 
 🛠️ 4. Technology Stack
+
 Component	Technology
 Frontend	HTML5, CSS3, JavaScript
 UI Framework	Bootstrap 5
