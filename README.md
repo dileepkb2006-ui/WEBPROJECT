@@ -12,35 +12,7 @@ The application is designed to run locally on Windows without paid APIs, cloud s
 
 Developed as an advanced academic machine learning project, it demonstrates the practical application of artificial intelligence, machine learning, data analytics, and web development in agriculture.
 
----
 
-## 📑 Table of Contents
-📑 Table of Contents
-
-Project Overview
-Key Features
-Project Structure
-Technology Stack
-System Requirements
-Installation and Setup
-Dataset Preparation
-Launch the Application
-Machine Learning Architecture
-Crop Recommendation System
-Smart Irrigation Planner
-Fertilizer and Soil Nutrient Advisory
-Analytics Dashboard
-API Documentation
-Database Design
-Testing and Evaluation
-Security and Data Validation
-Future Enhancements
-Limitations and Disclaimer
-Academic Project Information
-Contributing
-Conclusion
-
----
 
 ## 📌 1. Project Overview
 
