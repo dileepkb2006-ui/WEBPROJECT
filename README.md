@@ -217,6 +217,3 @@ Credits
 
 Built as a BCA Machine Learning Project to demonstrate the practical application of machine learning, data analytics, and web development in agriculture.
 
-## 📜 License
-
-This project is intended for academic and educational use. Add an appropriate license file if you wish to distribute the project under specific reuse terms.
